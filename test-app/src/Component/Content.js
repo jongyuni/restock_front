@@ -1,55 +1,22 @@
-import { Component } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import ItemList from "./ItemList";
 
-export default class Content extends Component {
-  constructor(props) {
-    super(props);
+function Content() {
+  const [info, setInfo] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [modalOn, setModalOn] = useState(false);
 
-    this.state = {
-      itemNo: 0,
-      items: [],
-    };
-  }
+  const nextId = useRef(11);
 
-  addItem() {
-    const itemNoInput = document.querySelector("#itemNoInput");
-    const sizeInput = document.querySelector("#sizeInput");
-    var fullInput = itemNoInput.value + " / " + sizeInput.value;
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000")
+      .then((res) => setInfo(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
-    if (fullInput) {
-      const tempArr = [...this.state.items];
-      tempArr.push(<li>{fullInput}</li>);
-      this.setState({
-        items: tempArr,
-      });
-      fullInput = "";
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <input
-          autocomplete="off"
-          id="itemNoInput"
-          type="text"
-          placeholder="아이템 번호"
-        ></input>
-        <input
-          autocomplete="off"
-          id="sizeInput"
-          type="text"
-          placeholder="사이즈"
-        ></input>
-        <input
-          type="button"
-          value="등록"
-          onClick={() => {
-            this.addItem();
-          }}
-        ></input>
-        <ItemList items={this.state.items} />
-      </div>
-    );
-  }
+  console.log(info);
 }
+
+export default Content;
