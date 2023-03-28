@@ -11,7 +11,7 @@ function Content() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000")
+      .get("/items")
       .then((res) => setInfo(res.data))
       .catch((err) => console.log(err));
   }, []);
