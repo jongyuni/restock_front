@@ -8,7 +8,6 @@ function Item({ item, handleRemove }) {
   return (
     <>
       <tr className="bg-white boarder-2 border-gray-200">
-        <td className="px-4 py-3">{item.id}</td>
         <td className="px-4 py-3">{item.itemNo}</td>
         <td className="px-4 py-3">{item.size}</td>
         <td

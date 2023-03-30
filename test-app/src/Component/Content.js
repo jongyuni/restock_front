@@ -7,8 +7,6 @@ function Content() {
   const [selected, setSelected] = useState([]);
   const [modalOn, setModalOn] = useState(false);
 
-  const nextId = useRef(11);
-
   useEffect(() => {
     axios
       .get("/items")
@@ -16,9 +14,11 @@ function Content() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(info);
-
-  const handleRemove = () => {};
+  const handleRemove = (itemNo) => {
+    axios
+      .delete("delete?itemNo=", { data: { itemNo } })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="container max-w-screen-lg mx-auto">
@@ -28,7 +28,6 @@ function Content() {
       <table className="min-w-full table-auto text-gray-800">
         <thead className="justify-between">
           <tr className="bg-gray-800">
-            <th className="text-gray-300 px-4 py-3">Id.</th>
             <th className="text-gray-300 px-4 py-3">ItemNo.</th>
             <th className="text-gray-300 px-4 py-3">Size.</th>
             <th className="text-gray-300 px-4 py-3">Delete.</th>
