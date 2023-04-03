@@ -4,8 +4,6 @@ import ItemList from "../Value/ItemList";
 
 function Content() {
   const [info, setInfo] = useState([]);
-  const [selected, setSelected] = useState([]);
-  const [modalOn, setModalOn] = useState(false);
   const [newItemNo, setNewItemNo] = useState([]);
   const [newItemSize, setNewItemSize] = useState([]);
 
@@ -18,15 +16,19 @@ function Content() {
 
   const handleRemove = (itemNo) => {
     axios
-      .delete("delete?itemNo=", { data: { itemNo } })
+      .delete("/items/delete?itemNo=", { data: { itemNo } })
       .catch((err) => console.log(err));
   };
 
-  // const handleAdd = () => {
-  //   axios
-  //     .post("new", { itemNo: itemNo, size: size })
-  //     .catch((err) => console.log(err));
-  // };
+  const handleAdd = () => {
+    axios
+      .post("/items/new", {
+        itemNo: newItemNo,
+        size: newItemSize,
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="container max-w-screen-lg mx-auto">
@@ -34,9 +36,19 @@ function Content() {
         재고 알람 리스트
       </div>
       <div>
-        <input name="newNo" placeholder="Item No" />
-        <input name="newSize" placeholder="Size" />
-        <button name="addBtn">추가</button>
+        <input
+          name="newNo"
+          placeholder="Item No"
+          onChange={(e) => setNewItemNo(e.target.value)}
+        />
+        <input
+          name="newSize"
+          placeholder="Size"
+          onChange={(e) => setNewItemSize(e.target.value)}
+        />
+        <button name="addBtn" onClick={handleAdd}>
+          추가
+        </button>
       </div>
       <table className="min-w-full table-auto text-gray-800">
         <thead className="justify-between">
