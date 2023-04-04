@@ -14,10 +14,9 @@ function Content() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleRemove = (itemNo) => {
-    axios
-      .delete("/items/delete?itemNo=", { data: { itemNo } })
-      .catch((err) => console.log(err));
+  const handleRemove = (id) => {
+    axios.delete(`/items/delete?item=${id}`).catch((err) => console.log(err));
+    setInfo(info.filter((inf) => inf.id !== id));
   };
 
   const handleAdd = () => {
@@ -26,7 +25,7 @@ function Content() {
         itemNo: newItemNo,
         size: newItemSize,
       })
-      .then((res) => console.log(res.data))
+      .then((res) => setInfo(res.data))
       .catch((err) => console.log(err));
   };
 
